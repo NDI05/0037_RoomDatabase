@@ -1,11 +1,7 @@
 package com.nusadataindonesia.pertemuan_kesembilan.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.nusadataindonesia.pertemuan_kesembilan.AplikasiSiswa
 import com.nusadataindonesia.pertemuan_kesembilan.repositori.RepositoriSiswa
 import com.nusadataindonesia.pertemuan_kesembilan.room.Siswa
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,12 +22,5 @@ class HomeViewModel(repositoriSiswa: RepositoriSiswa) : ViewModel() {
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
-
-        fun factory(aplikasiSiswa: AplikasiSiswa): ViewModelProvider.Factory =
-            viewModelFactory {
-                initializer {
-                    HomeViewModel(aplikasiSiswa.container.repositoriSiswa)
-                }
-            }
     }
 }
