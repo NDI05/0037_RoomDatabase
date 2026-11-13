@@ -33,6 +33,7 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref="room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref="room" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.10.0" }
 lifectyle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version = "2.10.0" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version = "2.9.6" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
