@@ -5,6 +5,9 @@ import com.nusadataindonesia.pertemuan_kesembilan.room.SiswaDao
 import kotlinx.coroutines.flow.Flow
 
 interface RepositoriSiswa {
+    fun getSiswaStream(id: Int): Flow<Siswa?>
+
+
     fun getAllSiswaStream(): Flow<List<Siswa>>
     suspend fun insertSiswa(siswa: Siswa)
 }
