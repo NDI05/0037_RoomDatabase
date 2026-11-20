@@ -41,4 +41,3 @@ class DetailViewModel(
         val detailSiswa: DetailSiswa = DetailSiswa()
     )
 }
-
