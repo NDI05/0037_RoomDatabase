@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class DetailViewModel(
-    savedSateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val repositoriSiswa: RepositoriSiswa
 ): ViewModel(){
     private val idSiswa: Int = checkNotNull(savedSateHandle[DestinationDetailSiswa.itemIDArg])
