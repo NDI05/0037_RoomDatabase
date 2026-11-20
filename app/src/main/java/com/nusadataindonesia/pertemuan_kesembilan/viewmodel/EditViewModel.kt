@@ -29,11 +29,11 @@ class EditViewModel(
         }
     }
 
-     fun updateUiState(detailSiswa: DetailSiswa){
-         uiStateSiswa =
-             UIStateSiswa(detailSiswa = detailSiswa,
+    fun updateUiState(detailSiswa: DetailSiswa){
+        uiStateSiswa =
+            UIStateSiswa(detailSiswa = detailSiswa,
                 isEntryValid = validasiInput(uiState=detailSiswa))
-     }
+    }
 
     private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa): Boolean{
         return with(uiState){
