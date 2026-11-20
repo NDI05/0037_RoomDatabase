@@ -20,14 +20,14 @@ class EditViewModel(
         private set
 
     private val idSiswa: Int = checkNotNull(savedStateHandle[DestinasiEditSiswa.itemIdArg])
-        init {
-            viewModelScope.launch {
-                uiStateSiswa = repositoriSiswa.getSiswaStream(idSiswa)
-                    .filterNotNull()
-                    .first()
-                    .toUIStateSiswa(isEntryValid = true)
-            }
+    init {
+        viewModelScope.launch {
+            uiStateSiswa = repositoriSiswa.getSiswaStream(idSiswa)
+                .filterNotNull()
+                .first()
+                .toUIStateSiswa(isEntryValid = true)
         }
+    }
 
      fun updateUiState(detailSiswa: DetailSiswa){
          uiStateSiswa =
