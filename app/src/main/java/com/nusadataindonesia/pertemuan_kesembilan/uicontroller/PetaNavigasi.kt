@@ -20,8 +20,8 @@ import com.nusadataindonesia.pertemuan_kesembilan.view.EntrySiswaScreen
 import com.nusadataindonesia.pertemuan_kesembilan.view.HomeScreen
 
 @Composable
-fun SiswaApp(navController: NavHostController = rememberNavController()) {
-    HostNavigasi(navController = navController)
+fun SiswaApp(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()) {
+    HostNavigasi(navController = navController, modifier = modifier)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
