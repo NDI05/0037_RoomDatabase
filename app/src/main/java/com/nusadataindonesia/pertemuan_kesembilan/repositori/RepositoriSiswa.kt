@@ -9,6 +9,8 @@ interface RepositoriSiswa {
 
     suspend fun deleteSiswa(siswa: Siswa)
     
+    suspend fun updateSiswa(siswa: Siswa)
+
     fun getAllSiswaStream(): Flow<List<Siswa>>
     suspend fun insertSiswa(siswa: Siswa)
 }
