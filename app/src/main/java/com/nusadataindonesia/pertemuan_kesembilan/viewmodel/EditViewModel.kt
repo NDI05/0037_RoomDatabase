@@ -39,7 +39,7 @@ class EditViewModel(
             nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
         }
     }
-    
+
     suspend fun udpateSiswa(){
         if (validasiInput()){
             repositoriSiswa.updateSiswa(uiStateSiswa.detailSiswa.toSiswa())
