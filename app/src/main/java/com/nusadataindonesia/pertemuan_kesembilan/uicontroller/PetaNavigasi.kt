@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.nusadataindonesia.pertemuan_kesembilan.view.DetailSiswaScreen
+import com.nusadataindonesia.pertemuan_kesembilan.view.EditSiswaScreen
 import com.nusadataindonesia.pertemuan_kesembilan.view.EntrySiswaScreen
 import com.nusadataindonesia.pertemuan_kesembilan.view.HomeScreen
 import com.nusadataindonesia.pertemuan_kesembilan.uicontroller.DestinasiDetailSiswa.itemIdArg
@@ -46,6 +47,14 @@ fun HostNavigasi(
             DetailSiswaScreen(
                 navigateToEditItem = { navController.navigate("${DestinasiEditSiswa.route}/$it") },
                 navigateBack = { navController.navigateUp() })
+        }
+        composable(route = DestinasiEditSiswa.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiEditSiswa.itemIdArg) {
+                type = NavType.IntType
+            })) {
+            EditSiswaScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() })
         }
     }
 }
