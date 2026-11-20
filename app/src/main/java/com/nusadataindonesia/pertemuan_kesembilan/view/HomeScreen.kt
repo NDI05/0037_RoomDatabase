@@ -1,5 +1,6 @@
 package com.nusadataindonesia.pertemuan_kesembilan.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nusadataindonesia.pertemuan_kesembilan.R
 import com.nusadataindonesia.pertemuan_kesembilan.room.Siswa
@@ -41,10 +44,11 @@ import com.nusadataindonesia.pertemuan_kesembilan.viewmodel.PenyediaViewModel
 @Composable
 fun HomeScreen(
     navigateToItemEntry: () -> Unit,
+    //edit 5
+    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
-    val homeUiState by viewModel.homeUiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -57,16 +61,24 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = navigateToItemEntry) {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.entry_siswa)
                 )
             }
-        }
-    ) { innerPadding ->
+        },
+    ) {
+            innerPadding ->
+        val uiStateSiswa by viewModel.homeUiState.collectAsState()
         BodyHome(
-            itemSiswa = homeUiState.listSiswa,
+            itemSiswa = uiStateSiswa.listSiswa,
+            //edit 6
+            onSiswaClick = navigateToItemUpdate,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -75,7 +87,12 @@ fun HomeScreen(
 }
 
 @Composable
-fun BodyHome(itemSiswa: List<Siswa>, modifier: Modifier = Modifier) {
+fun BodyHome(
+    itemSiswa: List<Siswa>,
+    //edit 3 : parameter onSiswaClick
+    onSiswaClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -83,48 +100,72 @@ fun BodyHome(itemSiswa: List<Siswa>, modifier: Modifier = Modifier) {
         if (itemSiswa.isEmpty()) {
             Text(
                 text = stringResource(R.string.deskripsi_no_item),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_large))
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
             )
         } else {
             ListSiswa(
                 itemSiswa = itemSiswa,
-                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small))
+                //edit 4
+                onSiswaClick = { onSiswaClick(it.id) },
+                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )
         }
     }
 }
 
 @Composable
-fun ListSiswa(itemSiswa: List<Siswa>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(items = itemSiswa, key = { it.id }) { siswa ->
+fun ListSiswa(
+    itemSiswa: List<Siswa>,
+    //edit 1 : tambahkan parameter onSiswaClick
+    onSiswaClick: (Siswa) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = Modifier) {
+        items(items = itemSiswa, key = { it.id }) {
+                person ->
             DataSiswa(
-                siswa = siswa,
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
-            )
+                siswa = person,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+                    //edit2 : tambahkan modifikasi clickable
+                    .clickable { onSiswaClick(person) })
         }
     }
 }
 
 @Composable
-fun DataSiswa(siswa: Siswa, modifier: Modifier = Modifier) {
+fun DataSiswa(
+    siswa: Siswa,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.padding_small))
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_large)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(text = siswa.nama, style = MaterialTheme.typography.titleLarge)
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(imageVector = Icons.Default.Phone, contentDescription = null)
-                Text(text = siswa.telpon, style = MaterialTheme.typography.titleMedium)
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = siswa.nama,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                Spacer(Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null,
+                )
+                Text(
+                    text = siswa.telpon,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
             Text(
-                text = "${stringResource(R.string.alamat1)} ${siswa.alamat}",
+                text = siswa.alamat,
                 style = MaterialTheme.typography.titleMedium
             )
         }
