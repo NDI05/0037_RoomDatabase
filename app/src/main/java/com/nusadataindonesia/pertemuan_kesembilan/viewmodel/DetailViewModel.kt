@@ -7,7 +7,6 @@ import com.nusadataindonesia.pertemuan_kesembilan.repositori.RepositoriSiswa
 import com.nusadataindonesia.pertemuan_kesembilan.uicontroller.DestinasiDetailSiswa
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
